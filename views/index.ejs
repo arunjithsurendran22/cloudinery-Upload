@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cloudinary Media Upload</title>
+</head>
+<body>
+  <h1>Cloudinary Media Upload</h1>
+
+  <form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="media" multiple>
+    <button type="submit">Upload</button>
+  </form>
+
+  <h2>Uploaded Media:</h2>
+  <ul>
+    <% media.forEach(function(item) { %>
+      <li>
+        <img src="<%= item.url %>" alt="<%= item.title %>" style="max-width: 300px;">
+        <form action="/delete/<%= item._id %>" method="POST">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    <% }); %>
+  </ul>
+</body>
+</html>
