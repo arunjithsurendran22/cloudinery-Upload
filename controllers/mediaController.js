@@ -15,13 +15,24 @@ module.exports = {
   uploadMedia: async (req, res) => {
     try {
       const promises = req.files.map((file) => {
-        return cloudinary.uploader.upload_stream({ resource_type: 'auto' }, (result) => {
-          const media = new Media({
-            title: result.original_filename,
-            url: result.url,
-          });
-          media.save();
-        }).end(file.buffer);
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload_stream(
+            (result) => {
+              const media = new Media({
+                title: result.original_filename || 'Untitled',
+                url: result.url,
+              });
+              media.save((err, savedMedia) => {
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve(savedMedia);
+                }
+              });
+            },
+            { resource_type: 'auto' }
+          ).end(file.buffer);
+        });
       });
 
       await Promise.all(promises);
