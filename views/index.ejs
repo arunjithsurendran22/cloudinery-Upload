@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cloudinary Media Upload</title>
+    <title>Image Upload and Delete</title>
 </head>
 <body>
-  <h1>Cloudinary Media Upload</h1>
+    <h1>Image Upload and Delete</h1>
+    
+    <!-- Form to upload an image -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Upload</button>
+    </form>
 
-  <form action="/upload" method="POST" enctype="multipart/form-data">
-    <input type="file" name="media" multiple>
-    <button type="submit">Upload</button>
-  </form>
-
-  <h2>Uploaded Media:</h2>
-  <ul>
-    <% media.forEach(function(item) { %>
-      <li>
-        <img src="<%= item.url %>" alt="<%= item.title %>" style="max-width: 300px;">
-        <form action="/delete/<%= item._id %>" method="POST">
-          <button type="submit">Delete</button>
-        </form>
-      </li>
-    <% }); %>
-  </ul>
+    <!-- Display uploaded images -->
+    <div>
+        <h2>Uploaded Images:</h2>
+        <ul>
+            <% images.forEach(image => { %>
+                <li>
+                    <img src="<%= image.url %>" alt="Uploaded Image">
+                    <form action="/delete/<%= image._id %>" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
 </body>
 </html>
