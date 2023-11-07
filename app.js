@@ -18,6 +18,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -29,6 +30,7 @@ const imageController = require("./controllers/imageController");
 app.get("/", imageController.getImages);
 app.post("/upload", multer().single("image"), imageController.uploadImage);
 app.post("/delete/:id", imageController.deleteImage);
+app.post("/update/:id",imageController.updateImage)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

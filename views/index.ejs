@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Image Upload and Delete</title>
 </head>
+<style>
+    li {
+        list-style: none;
+    }
+    img{
+        border-radius: 20px;
+    }
+    button{
+        background-color: rgb(30, 174, 210);
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+    }
+</style>
+
 <body>
     <h1>Image Upload and Delete</h1>
-    
+
     <!-- Form to upload an image -->
     <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="image" accept="image/*" required>
@@ -18,13 +34,19 @@
         <ul>
             <% images.forEach(image => { %>
                 <li>
-                    <img src="<%= image.url %>" alt="Uploaded Image">
+                    <img src="<%= image.url %>" alt="Uploaded Image" height="300px" width="450px">
                     <form action="/delete/<%= image._id %>" method="post">
                         <button type="submit">Delete</button>
+                    </form>
+                    <!-- Edit Form for updating an image -->
+                    <form action="/update/<%= image._id %>" method="post" enctype="multipart/form-data">
+                        <input type="file" name="newImage" accept="image/*" required>
+                        <button type="submit">Update Image</button>
                     </form>
                 </li>
             <% }); %>
         </ul>
     </div>
 </body>
+
 </html>
